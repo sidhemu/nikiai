@@ -20,7 +20,9 @@
               </span>
             </div>
             <h4>Show result</h4>
+            <div id="resultarr">
 
+            </div>
         </div>
 
         <div class="col-md-8 col-md-offset-2">
@@ -66,7 +68,7 @@
                       $line.append( $( "<td></td>" ).html( arry ) );
                       $table.append( $line );
                   }
-            $table.appendTo('.result');
+            $table.appendTo('#resultarr');
           });
 
 
