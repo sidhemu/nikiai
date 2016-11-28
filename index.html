@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Niki.ai Assignment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <div class="header clearfix">
+              <h3 class="text-muted">Niki.ai Assignment</h3>
+            </div>
+            <div class="input-group">
+              <input type="number" id="getlength" class="form-control" placeholder="Array length">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="putlength">Go!</button>
+              </span>
+            </div>
+            <h4>Show result</h4>
+
+        </div>
+
+        <div class="col-md-8 col-md-offset-2">
+          <div class="result">
+              <div id="results"></div>
+          </div>
+        </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.tabletojson.js"></script>
+    <script type="text/javascript">
+    $("#putlength").click(function(){
+            var arrlength = $('#getlength').val();
+            console.log(arrlength);
+            var arr = [];
+            for (var i = 0; i < arrlength; i++) {
+              arr.push(prompt('Enter grade ' + (i+1)));
+            }
+            arrSort(arr);
+            function arrSort(a) {
+                var swapped;
+                do {
+                    swapped = false;
+                    for (var i = 0; i < a.length - 1; i++) {
+                        if (a[i].length > a[i + 1].length) {
+                            var temp = a[i+1];
+                            a[i+1] = a[i];
+                            a[i] = temp;
+                            swapped = true;
+                        }
+                    }
+                } while (swapped);
+            }
+            var sortedArr = $.parseJSON(JSON.stringify(arr));
+            var $table = $( "<table></table>" );
+            for ( var i = 0; i < sortedArr.length; i++ ) {
+                      var arry = sortedArr[i];
+                      var $line = $( "<tr></tr>" );
+                      $line.append( $( "<td></td>" ).html( arry ) );
+                      $table.append( $line );
+                  }
+            $table.appendTo('.result');
+          });
+
+
+    </script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(function () {
+      url = 'https://www.reddit.com/.rss';
+      $.ajax({
+          type: "GET",
+          url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(url),
+          dataType: 'json',
+          error: function () {
+              alert('Unable to load feed, Incorrect path or invalid feed');
+          },
+          success: function (xml) {
+              values = xml.responseData.feed.entries;
+              console.log(values);
+              $.each(values, function (i) {
+                conTable = values[i].content;
+                tablejson = JSON.stringify(values[i].content);
+                console.log(tablejson);
+                  var atag = document.createElement('div');
+
+                  $(atag).attr('id', 'feed_'+i);
+                  $(atag).addClass('thumbnail');
+                  $(atag).append('<h3 class="ttl_feed"><a href="'+values[i].link +'">' + values[i].title + '</a></h3>');
+                  $(atag).append('<div>'+values[i].content+'</div>');
+                  $(atag).append('<span>' + values[i].publishedDate + '</span>');
+                  $('#results').append(atag);
+              });
+
+          }
+      });
+  });
+    });
+    </script>
+  </body>
+</html>
