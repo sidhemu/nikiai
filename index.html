@@ -34,7 +34,7 @@
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.tabletojson.js"></script>
+    <script type="text/javascript" src="dateformat.js"></script>
     <script type="text/javascript">
     $("#putlength").click(function(){
             var arrlength = $('#getlength').val();
@@ -96,13 +96,18 @@
                   $(atag).addClass('thumbnail');
                   $(atag).append('<h3 class="ttl_feed"><a href="'+values[i].link +'">' + values[i].title + '</a></h3>');
                   $(atag).append('<div>'+values[i].content+'</div>');
-                  $(atag).append('<span>' + values[i].publishedDate + '</span>');
+                  var date = values[i].publishedDate;
+                  var formated = dateFormat(date, "mm/dd/yy, h:MM:ss TT");
+                  $(atag).append('<span>' + formated + '</span>');
+
                   $('#results').append(atag);
               });
 
           }
       });
   });
+
+
     });
     </script>
   </body>
